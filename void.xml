@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<!-- v1 --><html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='indie.xml' b:templateVersion='1.3.3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<!-- Void v1.1 by XML Expr (https://xmlexpr.blogspot.com/) --><html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='indie.xml' b:templateVersion='1.3.3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
   <head>
     
     <!-- # head -->
@@ -86,7 +86,7 @@
 
     </b:if>
 
-    <!-- tags: # skin -->
+    <!-- tags: #blog_skin, #blog_layout_skin -->
       	    <b:template-skin>
 <![CDATA[
 
@@ -108,8 +108,16 @@
 {
 	margin: -1rem -1rem 1rem;
     padding: 1rem;
-    background: #58587d;
+}
+
+#layout ._html .section h4
+{
+	background: #e34f26; /* HTML orange */
     color: white;
+}
+
+#layout ._html .section {
+	background: #fff0eb;
 }
 
 #layout ._html > div,
@@ -119,22 +127,39 @@
 	margin: 0 0.3rem !important;
 }
 
-#layout ._html .section {
-	background: #fff0eb;
-}
-
 #layout ._html > div,
 #layout ._preAssets,
 #layout ._postAssets {
 	display: grid;
 }
 
-#layout ._preAssets .section {
-	background: #e8f4f8;
+#layout ._preAssets .section,
+#layout ._postAssets .section {
+	background: #e7f4e8; /* greenish blend of JS yellow + CSS blue */
 }
 
-#layout ._postAssets .section {
-	background: #f4e1f4;
+#layout ._preAssets .section h4,
+#layout ._postAssets .section h4 {
+	margin: -1rem -1rem 1rem;
+	padding: 1rem;
+	background: #4f8a5b;
+	color: white;
+	border-bottom: 3px solid #3d6e47;
+	letter-spacing: 0.03em;
+}
+
+#layout ._builderScripts .section {
+	background: #fff8d9; /* soft JavaScript yellow */
+}
+
+#layout ._builderScripts .section h4 {
+	margin: -1rem -1rem 1rem;
+	padding: 1rem;
+	background: #f7df1e; /* JavaScript yellow */
+	color: #222;
+	border-bottom: 3px solid #d1bb12;
+	letter-spacing: 0.03em;
+	font-weight: 700;
 }
 ]]>
 </b:template-skin>
@@ -227,11 +252,22 @@
     <b:if cond='data:view.isLayoutMode'>
     
       
-		<!-- tags: # layout -->
+		<!-- tags: #blog_layout -->
+      
+      	<!-- blog sections -->
+        <div class='_assets' style='margin-bottom:2rem;'>
+          <div>
+	          <b:include name='section:moveable_widgets'/>
+          </div>
+          <div>
+            <b:include name='section_homepage_widgets'/>
+          </div>
+        </div>
       
       	<div>
+          
+          <!-- page views templates -->
           <div class='_html' style='margin-bottom:2rem;'>
-            <!-- page templates -->
             <div>
             	<b:include name='SectionDefaultTemplate'/>
             </div>
@@ -245,7 +281,7 @@
           
           <div class='_assets'>
             
-            <div>
+            <div class='_builderScripts'>
             	<b:include name='section:blog_scripts'/>
             </div>
             <!-- pre-build assets -->
@@ -283,10 +319,11 @@
           <!-- shared -->
           <b:include name='SectionSharedTemplate'/>
       	</template>
-      	
+      
       	<!-- section and widgets -->
       	<div style='height:1px;position:absolute;bottom:0;right:0;width:1px;padding:1px;overflow:hidden'>
           <b:include name='section:moveable_widgets'/>
+          <b:include name='section_homepage_widgets'/>
       	</div>
       
       	<div hidden='hidden'>
@@ -348,7 +385,7 @@
         </b:includable>
       </b:defaultmarkup>
       
-      <!-- tags: # html -->
+      <!-- tags: #widget_html -->
       <b:defaultmarkup type='HTML'>
         <b:includable id='main'>
 
@@ -732,14 +769,160 @@
     </b:defaultmarkups>
 
 
-    <!-- # section -->
+    <!-- tags: #blog_section -->
     
     <b:defaultmarkups>
       	<b:defaultmarkup type='Common'>
               
-          
+          <b:includable id='section_homepage_widgets'>
+            <b:section id='Sidebar Gadgets'>
+              <b:widget id='Label1' locked='false' title='Labels' type='Label' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+                  <b:widget-setting name='display'>LIST</b:widget-setting>
+                  <b:widget-setting name='selectedLabelsList'/>
+                  <b:widget-setting name='showType'>ALL</b:widget-setting>
+                  <b:widget-setting name='showFreqNumbers'>true</b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+
+            <template class='WidgetData' expr:id='data:widget.instanceId'>
+              <div>
+                <data key='title'><data:title/></data>
+                <data key='labels[]'>
+                  <b:loop values='data:labels' var='item'>
+                      <div>
+                          <data key='url'><data:item.url/></data>
+                          <data key='name'><b:include data='{ name: data:item.name }' name='_labelAlias'/></data>
+                          <data key='count'><data:item.count/></data>
+                      </div>
+                  </b:loop>
+                </data>
+              </div>
+            </template>
+
+          </b:includable>
+                <b:includable id='cloud'>
+  <b:loop values='data:labels' var='label'>
+    <span class='label-size'>
+      <b:class expr:name='&quot;label-size-&quot; + data:label.cssSize'/>
+      <a class='label-name' expr:href='data:label.url'>
+        <data:label.name/>
+        <b:if cond='data:this.showFreqNumbers'>
+          <span class='label-count'><data:label.count/></span>
+        </b:if>
+      </a>
+    </span>
+  </b:loop>
+</b:includable>
+                <b:includable id='content'>
+  <div class='widget-content'>
+    <b:class expr:name='data:this.display + &quot;-label-widget-content&quot;'/>
+    <b:include cond='data:this.display == &quot;list&quot;' name='list'/>
+    <b:include cond='data:this.display == &quot;cloud&quot;' name='cloud'/>
+  </div>
+</b:includable>
+                <b:includable id='list'>
+  <ul>
+    <b:loop values='data:labels' var='label'>
+      <li>
+        <a class='label-name' expr:href='data:label.url'>
+          <data:label.name/>
+          <b:if cond='data:this.showFreqNumbers'>
+            <span class='label-count'><data:label.count/></span>
+          </b:if>
+        </a>
+      </li>
+    </b:loop>
+  </ul>
+</b:includable>
+              </b:widget>
+              <b:widget id='LinkList1' locked='false' title='Blogs' type='LinkList' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='sorting'>NONE</b:widget-setting>
+                  <b:widget-setting name='text-0'>tmpcafe</b:widget-setting>
+                  <b:widget-setting name='link-0'>https://tmpcafe.blogspot.com/</b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+            <template class='WidgetData' expr:id='data:widget.instanceId'>
+              <div>
+                <data key='title'><data:title/></data>
+                <data key='links[]'>
+                  <b:loop values='data:links' var='link'>
+                      <div>
+                          <data key='target'><data:link.target/></data>
+                          <data key='name'><data:link.name/></data>
+                      </div>
+                  </b:loop>
+                </data>
+              </div>
+            </template>
+           
+            <b:include cond='data:widget.sectionId != &quot;moveable_widgets&quot;' name='originalMain'/>
+          </b:includable>
+                <b:includable id='content'>
+ <div class='widget-content'>
+   <ul>
+     <b:loop values='data:links' var='link'>
+       <li><a expr:href='data:link.target'><data:link.name/></a></li>
+     </b:loop>
+   </ul>
+ </div>
+</b:includable>
+                <b:includable id='originalMain'>
+            <b:include name='widget-title'/>
+  			<b:include name='content'/>
+          </b:includable>
+              </b:widget>
+            </b:section>
+          </b:includable>
           <b:includable id='section_post_assets'>
             <b:section id='(Post-build Assets)'>
+              <b:widget id='HTML3' locked='false' title='Autoresize Embedded Comment Form' type='HTML' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='content'><![CDATA[<script>
+window.addEventListener('message', (event) => {
+	if (typeof event.data !== 'string') return;
+
+	if (event.data.includes('set-comment-editor-height')) {
+		const height = event.data.split(' ')[1];
+
+		const frames = document.querySelectorAll(
+			'.single_comment-frame, .commentFrame'
+		);
+
+		for (const frame of frames) {
+			if (frame.contentWindow === event.source) {
+				frame.style.height = height;
+				break;
+			}
+		}
+	}
+});
+</script>]]></b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+
+          <b:if cond='data:widget.sectionId contains &quot;(&quot; AND data:widget.sectionId contains &quot;)&quot;'>
+            <b:include name='widget-title'/>
+            <div class='widget-content'>
+              <data:content/>
+            </div>
+          <b:elseif cond='data:widget.sectionId contains &quot;(&quot; AND data:widget.sectionId contains &quot;style:&quot;'/>
+            <style>
+              <data:content/>
+            </style>
+          <b:else/>
+            <template class='WidgetData' expr:id='data:widget.instanceId'>
+              <div>
+                <data key='title'><data:title/></data>
+                <data key='content' type='node'><data:content/></data>
+              </div>
+            </template>
+          </b:if>
+          
+        </b:includable>
+              </b:widget>
               <b:widget id='HTML17' locked='false' title='Wait Utility' type='HTML' visible='true'>
                 <b:widget-settings>
                   <b:widget-setting name='content'><![CDATA[<script>
@@ -862,6 +1045,181 @@ let postID = $('._dataPostId').textContent;
 let blogID = $('._dataBlogId').textContent;
 
 $('._editLink').href = `https://www.blogger.com/blog/post/edit/${blogID}/${postID}`
+})();
+</script>]]></b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+
+          <b:if cond='data:widget.sectionId contains &quot;(&quot; AND data:widget.sectionId contains &quot;)&quot;'>
+            <b:include name='widget-title'/>
+            <div class='widget-content'>
+              <data:content/>
+            </div>
+          <b:elseif cond='data:widget.sectionId contains &quot;(&quot; AND data:widget.sectionId contains &quot;style:&quot;'/>
+            <style>
+              <data:content/>
+            </style>
+          <b:else/>
+            <template class='WidgetData' expr:id='data:widget.instanceId'>
+              <div>
+                <data key='title'><data:title/></data>
+                <data key='content' type='node'><data:content/></data>
+              </div>
+            </template>
+          </b:if>
+          
+        </b:includable>
+              </b:widget>
+              <b:widget id='HTML15' locked='false' title='Threaded Comments' type='HTML' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='content'><![CDATA[<script>
+(async function () {
+
+    // v0.4
+
+    let $ = document.querySelector.bind(document);
+    let $$ = document.querySelectorAll.bind(document);
+
+    await wait.Until(() => $('._app').dataset.isReady)
+
+    const dataBlogId = $('._dataBlogId')?.textContent;
+    const dataPostId = $('._dataPostId')?.textContent;
+    const BLOG_ID = dataBlogId || $('head link[rel="service.post"]')?.href.split('feeds/')[1].split('/')[0];
+    const POST_ID = dataPostId || Array.from($$('head link[type="application/atom+xml"]')).find(e => e.href.includes('comments/default'))?.href.split('feeds/')[1].split('/')[0];
+    const API_KEY = '';
+
+    if (!POST_ID) {
+        console.info('No post ID provided.')
+        return;
+    }
+
+    const MAX_TOP = 5;
+    const MAX_REPLY = 3;
+
+    let allComments = [];
+    let topOffset = 0;
+    const replyOffsetMap = {};
+
+    function fetchAllComments(pageToken = '', acc = []) {
+        const fields = 'items(id,inReplyTo(id),published,content,author(displayName,image/url)),nextPageToken';
+        const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts/${POST_ID}/comments?key=${API_KEY}&fetchBodies=true&fields=${fields}${pageToken ? '&pageToken=' + pageToken : ''}`;
+        return fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                const items = data.items || [];
+                acc.push(...items);
+                if (data.nextPageToken) {
+                    return fetchAllComments(data.nextPageToken, acc);
+                } else {
+                    return acc;
+                }
+            });
+    }
+
+    function getAvatarHtml(author) {
+        const hasImage = author.image && author.image.url && !author.image.url.includes('blank.gif');
+        if (hasImage) {
+            // YouTube uses small thumbnails, 40x40 is standard
+            const imgUrl = author.image.url.replace('/s1600/', '/s40-c/');
+            return `<img src="${imgUrl}" class="avatar" alt="${author.displayName}">`;
+        }
+        const initial = author.displayName.charAt(0).toUpperCase();
+        return `<div class="avatar fallback">${initial}</div>`;
+    }
+
+    function render() {
+        const container = $('._comments');
+        container.innerHTML = '';
+
+        const topComments = allComments
+            .filter(c => !c.inReplyTo)
+            .sort((a, b) => new Date(b.published) - new Date(a.published));
+
+        const slice = topComments.slice(0, topOffset + MAX_TOP);
+
+        // top level comment
+        // #comment
+        slice.forEach(parent => {
+            const div = document.createElement('div');
+            div.className = 'comment';
+            div.innerHTML = commentTemplate(parent, true);
+            container.appendChild(div);
+            renderReplies(parent.id, div.querySelector('.replies'));
+        });
+
+        if (topOffset + MAX_TOP < topComments.length) {
+            const more = document.createElement('button');
+            more.className = 'btn';
+            more.textContent = 'Read older comments';
+            more.onclick = () => {
+                topOffset += MAX_TOP;
+                render();
+            };
+            container.appendChild(more);
+        }
+
+        // reply top level
+        // #reply
+        container.querySelectorAll('.reply-btn').forEach(btn => {
+            btn.onclick = () => {
+                let originalFormSrc = $('._dataPostCommentFormIframeSrc')?.textContent;
+                let parentID = btn.dataset.id;
+
+                if (!originalFormSrc) {
+                    alert('Cannot post reply. Original form URL is required.')
+                    return;
+                }
+
+                // hide others
+                Array.from($$('._replyFormDiv')).forEach(e => e.innerHTML = '')
+
+                let parentId = btn.dataset.id;
+                let div = $(`._replyFormDiv[data-id="${parentId}"]`);
+                div.innerHTML = `<iframe class="commentFrame" src="${originalFormSrc}&parentID=${parentID}">`
+            };
+        });
+    }
+
+    const commentTemplate = (item, isRoot) => `
+        <div class="commentItem">
+            ${getAvatarHtml(item.author)}
+            <div class="commentBody">
+                <div class="commentHead">
+                    <span class="author">${item.author.displayName}</span>
+                    <span class="meta">${new Date(item.published).toLocaleDateString()}</span>
+                </div>
+                <div class="content">${item.content}</div>
+                <div class="commentActions">
+                    <button class="reply-btn" data-id="${item.id}">Reply</button>
+                </div>
+                <div class="replyFormDiv _replyFormDiv" data-id="${item.id}"></div>
+            </div>
+        </div>
+        <div class="replies" id="replies-${item.id}"></div>
+    `;
+
+    function renderReplies(parentId, container) {
+        const replies = allComments
+            .filter(c => c.inReplyTo && c.inReplyTo.id === parentId)
+            .sort((a, b) => new Date(a.published) - new Date(b.published));
+
+        replies.forEach(reply => {
+            const div = document.createElement('div');
+            div.className = 'comment';
+            div.innerHTML = commentTemplate(reply, false);
+            container.appendChild(div);
+
+            const nested = div.querySelector('.replies');
+            renderReplies(reply.id, nested);
+        });
+    }
+
+
+    fetchAllComments().then(data => {
+        allComments = data;
+        render();
+    });
+
 })();
 </script>]]></b:widget-setting>
                 </b:widget-settings>
@@ -1020,7 +1378,7 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 .single_comment-frame {
     width: 100%;
     border: 1px solid #eee;
-    min-height: 250px;
+    // min-height: 250px;
     border-radius: 8px;
 }
 
@@ -1060,12 +1418,23 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
                   <b:widget-setting name='content'><![CDATA[<style>
 /* Container & General */
 .home_container {
-    max-width: 800px;
+    max-width: 1040px;
     margin: 0 auto;
     padding: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #333;
     line-height: 1.6;
+}
+
+.home_layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 48px;
+    align-items: start;
+}
+
+.home_main {
+    min-width: 0;
 }
 
 .home_section-title {
@@ -1074,6 +1443,75 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
     padding-bottom: 10px;
     margin-bottom: 30px;
     color: #111;
+}
+
+.home_sidebar {
+    position: sticky;
+    top: 20px;
+    display: grid;
+    gap: 22px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.home_sidebar-section + .home_sidebar-section {
+    border-top: 1px solid #eee;
+    padding-top: 18px;
+}
+
+.home_sidebar-title {
+    margin: 0 0 14px;
+    font-size: 1rem;
+    color: #111;
+}
+
+.home_label-list {
+    display: grid;
+    gap: 8px;
+}
+
+.home_link-list {
+    display: grid;
+    gap: 8px;
+}
+
+.home_label-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.home_link-item {
+    color: #333;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.home_label-item:hover .home_label-name {
+    text-decoration: underline;
+}
+
+.home_link-item:hover {
+    text-decoration: underline;
+}
+
+.home_label-name {
+    overflow-wrap: anywhere;
+}
+
+.home_label-count {
+    min-width: 2ch;
+    border-radius: 999px;
+    background: #f1f3f5;
+    color: #555;
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 4px 7px;
+    text-align: center;
 }
 
 /* Post Card Layout */
@@ -1128,6 +1566,17 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 }
 
 /* Responsive adjustment */
+@media (max-width: 760px) {
+    .home_layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .home_sidebar {
+        position: static;
+    }
+}
+
 @media (max-width: 480px) {
     .home_post-body {
         flex-direction: column-reverse;
@@ -1139,6 +1588,7 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
         max-width: 150px;
     }
 }
+
 </style>]]></b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
@@ -1201,6 +1651,17 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 }
 
 /* #endregion codeblock */
+
+.tr-caption-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* image box shadow */
+.tr-caption-container td > img {
+    box-shadow: 0px 5px 40px 4px #f4f4f4;
+}
+
 </style>]]></b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
@@ -1258,6 +1719,15 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 /* #endregion blogger blogspot default */
 
 
+/* #region ads */
+
+.adsSlot {
+	display: block;
+	width: 100%;
+	min-height: 120px;
+}
+
+/* #endregion ads */
 </style>]]></b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
@@ -1366,20 +1836,95 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
           
         </b:includable>
               </b:widget>
-              <b:widget id='HTML4' locked='false' title='Temporary Styles' type='HTML' visible='true'>
+              <b:widget id='HTML33' locked='false' title='comments.css' type='HTML' visible='true'>
                 <b:widget-settings>
                   <b:widget-setting name='content'><![CDATA[<style>
-
-.tr-caption-container img {
-  max-width: 100%;
-  height: auto;
+:root {
+  --yt-text-primary: #0f0f0f;
+  --yt-text-secondary: #606060;
+  --yt-line-color: #e5e5e5; /* Light gray for the thread line */
 }
 
-/* image box shadow */
-.tr-caption-container td > img {
-    box-shadow: 0px 5px 40px 4px #f4f4f4;
+.comment {
+  position: relative;
+  margin-bottom: 0.5rem;
 }
 
+.commentItem {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  position: relative;
+  z-index: 2; /* Keep content above the line */
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: #eee;
+}
+
+/* The Vertical Threading Line */
+/* This attaches to the 'replies' container */
+.replies {
+  margin-left: 20px; /* Half of the 40px avatar */
+  padding-left: 32px; /* Space for the reply content */
+  border-left: 2px solid var(--yt-line-color);
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+/* Optional: Make the line change color on hover to show active thread */
+.replies:hover {
+  border-left-color: #065fd4;
+}
+
+.commentBody {
+  flex-grow: 1;
+}
+
+.author {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--yt-text-primary);
+  margin-right: 8px;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--yt-text-secondary);
+}
+
+.content {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 4px 0;
+}
+
+.reply-btn {
+  background: none;
+  border: none;
+  color: var(--yt-text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-left: -12px;
+}
+
+.reply-btn:hover {
+  background: #f2f2f2;
+}
+
+.commentFrame {
+    width: 100%;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
 </style>]]></b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
@@ -1500,10 +2045,50 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 </div>
 
 <template id="BlogWidget">
-	<h2 class="home_section-title" b-if="view.isHomepage">Latest Posts</h2>
-	<div class="home_posts-list" b-data="posts" b-template="PostWidget"></div>
+	<div class="home_layout">
+		<main class="home_main">
+			<h2 class="home_section-title" b-if="view.isHomepage">Latest Posts</h2>
+			<div class="home_posts-list" b-data="posts" b-template="PostWidget"></div>
 
-	<b-include template="common-navigation"></b-include>
+			<b-include template="common-navigation"></b-include>
+		</main>
+
+		<aside class="home_sidebar">
+			<b-section id="Sidebar Gadgets"></b-section>
+		</aside>
+	</div>
+</template>
+
+<template id="HTML">
+	<section class="home_sidebar-section">
+		<h3 class="home_sidebar-title" b-if="title" b-data="title"></h3>
+		<div class="home_html-content" b-data="content"></div>
+	</section>
+</template>
+
+<template id="Label">
+	<section class="home_sidebar-section">
+		<h3 class="home_sidebar-title" b-data="title"></h3>
+		<div class="home_label-list" b-data="labels" b-template="BlogSidebarLabel"></div>
+	</section>
+</template>
+
+<template id="BlogSidebarLabel">
+	<a class="home_label-item" b-attr-href="url">
+		<span class="home_label-name" b-data="name"></span>
+		<span class="home_label-count" b-data="count"></span>
+	</a>
+</template>
+
+<template id="LinkList">
+	<section class="home_sidebar-section">
+		<h3 class="home_sidebar-title" b-data="title"></h3>
+		<div class="home_link-list" b-data="links" b-template="BlogSidebarLink"></div>
+	</section>
+</template>
+
+<template id="BlogSidebarLink">
+	<a class="home_link-item" b-attr-href="target" b-data="name"></a>
 </template>
 
 <!-- #post -->
@@ -1609,6 +2194,11 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
 		<footer class="single_footer">
 			<b-include template="common-navigation"></b-include>
 
+			<section class="single_comments-section">
+				<h3 class="single_comment-title">Leave A Comment</h3>
+				<iframe class="single_comment-frame" b-attr-src="commentFormIframeSrc"></iframe>
+				<div class="_comments"></div>
+			</section>
 		</footer>
 	</article>
 </template>
@@ -1646,8 +2236,8 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
           </b:includable>
           <b:includable id='section:moveable_widgets'>
             
-            <b:section id='Main' showaddelement='no'>
-              <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog' visible='true'>
+            <b:section id='Shared Gadgets' showaddelement='yes'>
+              <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog' version='2' visible='true'>
                 <b:widget-settings>
                   <b:widget-setting name='showDateHeader'>false</b:widget-setting>
                   <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
@@ -2500,11 +3090,12 @@ await new Promise(resolve => window.setTimeout(resolve, 500));
           <b:includable id='section:blog_scripts'>
             
             <b:section id='(Page Builder Scripts)' showaddelement='no'>
-              <b:widget id='HTML2' locked='true' title='JS: Builder v6.15' type='HTML' visible='true'>
+              <b:widget id='HTML2' locked='true' title='JS: Builder v6.18' type='HTML' visible='true'>
                 <b:widget-settings>
-                  <b:widget-setting name='content'><![CDATA[<script>// @ts-check
+                  <b:widget-setting name='content'><![CDATA[<script>
+// @ts-check
 
-// version: 6.15
+// version: 6.19
 function appBuilder(options) {
 	// tags: #vars
 	let $ = document.querySelector.bind(document);
@@ -2517,6 +3108,8 @@ function appBuilder(options) {
 	let templateMap = new Map();
 	let _globalData = {};
 	let _isDevelopment = options?.isDevelopment ?? true;
+	const ATTR_BINDINGS = ['href', 'src', 'title', 'alt'];
+	const attrSelector = ['[b-data]', ...ATTR_BINDINGS.map((x) => `[b-attr-${x}]`)].join(',');
 
 	// #function
 
@@ -2830,41 +3423,59 @@ function appBuilder(options) {
 
 		removeConditionalWidgets(devTemplate, _globalData);
 		fillDataSlots(devTemplate, _globalData);
-		processSection();
-		processWidget();
+
+		let processedCount = 0;
+
+		// A rendered widget template can have a b-section,
+		// and that section can render widgets.
+		// Stop after a pass where neither processor replaces anything.
+		do {
+			processedCount = processSection();
+			processedCount += processWidget();
+		} while (processedCount > 0);
 	}
 
 	function fillDataSlots(containerEl, data) {
 		const bindings = {
 			data: new Map(),
-			href: new Map(),
-			src: new Map(),
+			attr: new Map(),
 		};
 
 		// single DOM traversal
-		for (const el of containerEl.querySelectorAll('[b-data],[b-attr-href],[b-attr-src]')) {
+		for (const el of containerEl.querySelectorAll(attrSelector)) {
 			const dataKey = el.getAttribute('b-data');
-			const hrefKey = el.getAttribute('b-attr-href');
-			const srcKey = el.getAttribute('b-attr-src');
 
 			if (dataKey) {
-				if (!bindings.data.has(dataKey)) bindings.data.set(dataKey, []);
+				if (!bindings.data.has(dataKey)) {
+					bindings.data.set(dataKey, []);
+				}
+
 				bindings.data.get(dataKey).push(el);
 			}
 
-			if (hrefKey) {
-				if (!bindings.href.has(hrefKey)) bindings.href.set(hrefKey, []);
-				bindings.href.get(hrefKey).push(el);
-			}
+			for (const attr of [...el.attributes]) {
+				if (!attr.name.startsWith('b-attr-')) continue;
 
-			if (srcKey) {
-				if (!bindings.src.has(srcKey)) bindings.src.set(srcKey, []);
-				bindings.src.get(srcKey).push(el);
+				const realAttr = attr.name.slice(7);
+				const key = attr.value;
+
+				if (!bindings.attr.has(realAttr)) {
+					bindings.attr.set(realAttr, new Map());
+				}
+
+				const attrMap = bindings.attr.get(realAttr);
+
+				if (!attrMap.has(key)) {
+					attrMap.set(key, []);
+				}
+
+				attrMap.get(key).push(el);
 			}
 		}
 
 		for (const [key, value] of Object.entries(data)) {
-			if (Array.isArray(value) && !(value?.type === 'node')) {
+			// array template rendering
+			if (Array.isArray(value) && value?.type !== 'node') {
 				const elements = bindings.data.get(key);
 
 				if (!elements) continue;
@@ -2890,6 +3501,7 @@ function appBuilder(options) {
 					}
 
 					el.replaceChildren(docFrag);
+
 					el.removeAttribute('b-data');
 					el.removeAttribute('b-template');
 				}
@@ -2897,29 +3509,26 @@ function appBuilder(options) {
 				continue;
 			}
 
-			const hrefElements = bindings.href.get(key);
+			// generic attr bindings
+			if (typeof value === 'string') {
+				for (const [attrName, attrMap] of bindings.attr) {
+					const elements = attrMap.get(key);
 
-			if (hrefElements && typeof value === 'string') {
-				for (const el of hrefElements) {
-					el.href = value;
-					el.removeAttribute('b-attr-href');
+					if (!elements) continue;
+
+					for (const el of elements) {
+						el.setAttribute(attrName, value);
+						el.removeAttribute(`b-attr-${attrName}`);
+					}
 				}
 			}
 
-			const srcElements = bindings.src.get(key);
-
-			if (srcElements && typeof value === 'string') {
-				for (const el of srcElements) {
-					el.setAttribute('src', value);
-					el.removeAttribute('b-attr-src');
-				}
-			}
-
+			// text / node bindings
 			const dataElements = bindings.data.get(key);
 
 			if (dataElements) {
 				for (const el of dataElements) {
-					if (typeof value === 'string') {
+					if (typeof value === 'string' || typeof value === 'number') {
 						el.textContent = value;
 					} else if (value?.type === 'node') {
 						el.replaceChildren(...value.value.map((n) => n.cloneNode(true)));
@@ -2934,12 +3543,13 @@ function appBuilder(options) {
 	// tags: #section
 	function processSection() {
 		let nodes = devTemplate.querySelectorAll('b-section');
+		let processedCount = 0;
 
 		for (let node of nodes) {
 			let sectionId = node.getAttribute('id');
-			let sectionContainer = dataDoc.querySelector(`.section#${sectionId}`);
+			let sectionContainer = dataDoc.getElementById(sectionId);
 
-			if (!sectionContainer) {
+			if (!sectionContainer?.classList.contains('section')) {
 				continue;
 			}
 
@@ -2975,41 +3585,60 @@ function appBuilder(options) {
 			});
 
 			node.remove();
+			processedCount++;
 		}
+
+		return processedCount;
 	}
 
 	// #widgets
 	function processWidget() {
-		let nodes = devTemplate.querySelectorAll('b-widget');
+		let processedCount = 0;
 
-		for (let node of nodes) {
-			let widgetId = node.getAttribute('id');
-			let widgetType = getWidgetType(widgetId);
-			let templateId = node.getAttribute('template');
-			let widgetData = widgetsMap.get(widgetId);
-			let templateNode =
-				devTemplate.querySelector(`template#${templateId}`) ||
-				devTemplate.querySelector(`template#${widgetType}:not([section])`);
+		// keep processing to handle nested b-widget tags
+		while (true) {
+			let nodes = devTemplate.querySelectorAll('b-widget');
 
-			if (!templateNode) {
-				console.log(`widget template not found for widget:`, widgetId);
-				continue;
+			if (nodes.length === 0) break;
+
+			for (let node of nodes) {
+				let widgetId = node.getAttribute('id');
+				let widgetType = getWidgetType(widgetId);
+				let templateId = node.getAttribute('template');
+				let widgetData = widgetsMap.get(widgetId);
+				let templateNode =
+					devTemplate.querySelector(`template#${templateId}`) ||
+					devTemplate.querySelector(`template#${widgetType}:not([b-section])`);
+
+				if (!templateNode) {
+					console.log(`Widget template not found for widget:`, widgetId);
+					node.remove();
+					processedCount++;
+					continue;
+				}
+
+				if (!widgetData) {
+					console.log(`WidgetData with ID ${widgetId} not found.`);
+					node.remove();
+					processedCount++;
+					continue;
+				}
+
+				let widgetBuilder = Object.create(widgetBase);
+				widgetBuilder.data = Object.assign(widgetData.data, _globalData, {
+					widgetId: widgetId,
+				});
+				widgetBuilder.templateNode = templateNode;
+
+				const childNode = widgetBuilder.build();
+
+				node.parentNode.insertBefore(childNode, node);
+				node.remove();
+				processedCount++;
 			}
-
-			if (!widgetData) {
-				console.log(`empty widget slot:`, widgetId);
-				continue;
-			}
-
-			let widgetBuilder = Object.create(widgetBase);
-			widgetBuilder.data = Object.assign(widgetData.data, _globalData);
-			widgetBuilder.templateNode = templateNode;
-
-			const childNode = widgetBuilder.build();
-
-			node.parentNode.insertBefore(childNode, node);
-			node.remove();
 		}
+
+		return processedCount;
 	}
 
 	function findTemplate(parentTemplate, target) {
@@ -3054,6 +3683,7 @@ function appBuilder(options) {
 
 	return SELF;
 }
+
 </script>]]></b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
